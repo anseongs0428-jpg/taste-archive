@@ -93,7 +93,11 @@
     if (window.matchMedia('(prefers-reduced-motion: reduce)').matches) { drop(); return; }
     if (src) src.addEventListener('error', drop);
     v.addEventListener('error', drop);
-    var p = v.play && v.play(); if (p && p.catch) p.catch(function () { if (v.readyState < 2) drop(); });
+    v.muted = true; v.defaultMuted = true; v.setAttribute('webkit-playsinline', '');   /* 일부 폰 브라우저는 속성뿐 아니라 이 값이 있어야 자동 재생 허락 */
+    function tryPlay() { var p = v.parentNode && v.paused && v.play && v.play(); if (p && p.catch) p.catch(function () {}); }
+    tryPlay();   /* 자동 재생이 거절돼도 빼지 않는다 — 영상 아래 사진이 그대로 보이고, 첫 손짓에 다시 재생 (2026-10-13 갤럭시) */
+    ['touchstart', 'pointerdown', 'scroll', 'keydown'].forEach(function (ev) { window.addEventListener(ev, tryPlay, { passive: true, once: true }); });
+    v.addEventListener('canplay', tryPlay, { once: true });
     setTimeout(function () { if (v.error || v.networkState === 3) drop(); }, 3000);   /* 오류 이벤트를 놓쳤을 때 대비 */
   });
   var hTop = $('.ca-top--hero'), hImg = hTop && $('.ca-hero--full img', hTop), hT = hTop && $('.ca-hero-t', hTop);
