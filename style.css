@@ -517,3 +517,10 @@ img { display: block; max-width: 100%; }
 .mo-cells { border-top: var(--mo-line) solid var(--mo-lc); border-left: var(--mo-line) solid var(--mo-lc); grid-auto-rows: 1fr; }
 .mo-cells > .mo-cell, .mo-cells > .mo-cell:first-child, .mo-cells > .mo-cell[hidden] + .mo-cell { margin: 0; border-width: 0 var(--mo-line) var(--mo-line) 0; }
 .mo-cells > .mo-cell:not(.mo-full) + .mo-cell:not(.mo-full):nth-child(odd) { margin-left: 0; }   /* 왼쪽 칸 -1px 당김 해제 (위 정리와 짝) */
+/* 6주 커스텀: 폰 화면 정리 (학생 요청 — 2026-10-20 폰 확인)
+   1 2장 02 비주얼 — 3:2로 고정된 칸이 세로 사진(최대 420px)을 잘라서, 칸 높이를 사진에 맞춤
+   2 3장 공간 · 가까이 — 사진 아래 탭 세 칸의 높이를 가장 높은 칸에 맞춰 같게 (선택된 칸 글자 크기는 그대로) */
+@media (max-width: 768px) {
+  #s3 .mo-step .mo-mod-in .mo-step-fig { aspect-ratio: auto; }
+  .mo-tabs-m { align-items: stretch; }
+}
