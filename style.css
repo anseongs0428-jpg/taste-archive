@@ -524,3 +524,8 @@ img { display: block; max-width: 100%; }
   #s3 .mo-step .mo-mod-in .mo-step-fig { aspect-ratio: auto; }
   .mo-tabs-m { align-items: stretch; }
 }
+/* 6주 커스텀: 3장 공간 · 가까이 폰 탭 — 높이를 맞춘 뒤 선택한 칸이 구분되지 않아서, 선택한 칸만 메뉴 바와 같은 검정 55% + 흰 글자 (학생 요청 — 2026-10-20) */
+@media (max-width: 768px) {
+  .mo-tabs-m .mo-tab { transition: background-color .3s, color .3s; }
+  .mo-tabs-m .mo-tab.is-on { background-color: color-mix(in srgb, var(--mo-ref-shade) 55%, transparent); color: #fff; }
+}
