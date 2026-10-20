@@ -529,3 +529,9 @@ img { display: block; max-width: 100%; }
   .mo-tabs-m .mo-tab { transition: background-color .3s, color .3s; }
   .mo-tabs-m .mo-tab.is-on { background-color: color-mix(in srgb, var(--mo-ref-shade) 55%, transparent); color: #fff; }
 }
+/* 6주 커스텀: 폰에서 위 바를 한 번 누르면 흰 바탕·검은 글자로 굳던 문제 (학생 요청 — 2026-10-20 폰 확인)
+   폰은 누른 뒤에도 :hover가 남아서 — 마우스가 없는 기기에서는 메뉴가 열렸을 때만 흰 바탕, 닫으면 원래 검정 25%(첫 화면)·55%(다른 구역) + 흰 글자로 */
+@media (hover: none) {
+  .mo-bar:hover:not(.menu-open) .mo-box { background-color: color-mix(in srgb, var(--mo-ref-shade) 55%, transparent); color: #fff; border-color: #fff; --mo-lc: #fff; }
+  .mo-bar.on-hero:hover:not(.menu-open) .mo-box { background-color: color-mix(in srgb, var(--mo-ref-shade) 25%, transparent); }
+}
