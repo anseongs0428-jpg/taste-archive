@@ -538,3 +538,8 @@ img { display: block; max-width: 100%; }
 /* 6주 커스텀: 폰 메뉴를 열면 이사랑과 시선 사이 선이 안 보이던 문제 (학생 요청 — 2026-10-20 폰 확인)
    첫 칸 시선이 -1px 위로 당겨져 윗선이 메뉴 상자 밖으로 잘리고, 바탕이 이사랑 아랫선을 덮어서 — 첫 칸만 당기지 않음 */
 @media (max-width: 768px) { .mo-mnav-in > .mo-box:first-child { margin-top: 0; } }
+/* 7주 4장 물건 (W06-A 그대로 + 4장 · 2026-10-20) — 2장 사람과 같은 과정 모양이라 사진 처리도 2장과 같게
+   사진 높이 최대 420px · 원래 비율 · 넓은 화면은 상자 오른쪽 선과 45px 여백 · 폰은 칸 높이를 사진에 맞춰 잘리지 않게 */
+#s6 .mo-step-fig img { max-height: 420px; width: auto; max-width: 100%; }
+@media (min-width: 769px) { #s6 .mo-step-fig img { margin-left: auto; margin-right: 45px; } }
+@media (max-width: 768px) { #s6 .mo-step .mo-mod-in .mo-step-fig { aspect-ratio: auto; } }
