@@ -293,10 +293,20 @@
 
     /* ── 움직임 1·2: 섹션과 모듈 줄이 들어올 때 아래에서 떠오른다(스크롤 위치를 읽기만 함 · v1.2부터 기본값에서도) ── */
     if (MOTION >= 1 && 'IntersectionObserver' in window) {
-      var io = new IntersectionObserver(function (es) { es.forEach(function (e) { if (e.isIntersecting) { e.target.classList.add('is-in'); io.unobserve(e.target); } }); }, { rootMargin: '0px 0px -10% 0px' });
-      $$('.mo-intro > *, .mo-sec > *, .mo-contact > *, .mo-foot > *, .mo-mods > .mo-mod, .mo-cells > .mo-cell').forEach(function (el, k) { el.classList.add('mo-rv'); el.style.transitionDelay = (el.classList.contains('mo-mod') || el.classList.contains('mo-cell')) ? ((k % 6) * 60) + 'ms' : ''; io.observe(el); });
+      /* 6주 커스텀: 차례대로 떠오르게 (학생 요청 — 2026-10-20)
+         전에는 지연을 페이지 전체 순번 % 6으로 매겨 한 묶음 안에서도 순서가 섞였음 →
+         같은 순간 화면에 들어온 것끼리 페이지 위에서부터 0.08초 간격으로 띄우고, 다 뜨면 지연을 지워 호버 등 다른 움직임은 늦추지 않음 */
+      var show = function (els) {
+        els.sort(function (a, b) { return a.compareDocumentPosition(b) & 4 ? -1 : 1; });
+        els.forEach(function (el, j) {
+          el.style.transitionDelay = (j * 80) + 'ms'; el.classList.add('is-in'); io.unobserve(el);
+          setTimeout(function () { el.style.transitionDelay = ''; }, j * 80 + 900);
+        });
+      };
+      var io = new IntersectionObserver(function (es) { show(es.filter(function (e) { return e.isIntersecting; }).map(function (e) { return e.target; })); }, { rootMargin: '0px 0px -10% 0px' });
+      $$('.mo-intro > *, .mo-sec > *, .mo-contact > *, .mo-foot > *, .mo-mods > .mo-mod, .mo-cells > .mo-cell').forEach(function (el) { el.classList.add('mo-rv'); io.observe(el); });
       /* 페이지 끝까지 내리면 남은 것을 모두 보인다(맨 아래 요소가 -10% 선을 못 넘어 숨은 채 남는 것 방지) */
-      var revealAll = function () { if (scrollY + innerHeight >= D.documentElement.scrollHeight - 4) $$('.mo-rv:not(.is-in)').forEach(function (el) { el.classList.add('is-in'); }); };
+      var revealAll = function () { if (scrollY + innerHeight >= D.documentElement.scrollHeight - 4) show($$('.mo-rv:not(.is-in)')); };
       window.addEventListener('scroll', revealAll, { passive: true }); revealAll();
     }
 
