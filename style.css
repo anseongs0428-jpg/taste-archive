@@ -543,3 +543,5 @@ img { display: block; max-width: 100%; }
 #s6 .mo-step-fig img { max-height: 420px; width: auto; max-width: 100%; }
 @media (min-width: 769px) { #s6 .mo-step-fig img { margin-left: auto; margin-right: 45px; } }
 @media (max-width: 768px) { #s6 .mo-step .mo-mod-in .mo-step-fig { aspect-ratio: auto; } }
+/* 7주 커스텀: 기준이 쌓이는 자리 — 한 줄짜리 전폭 칸(물건·공통점)이 2줄 칸 높이에 맞춰 늘어나 아래 여백이 컸던 것 → 줄 높이를 내용에 맞춰 모든 칸 글 아래 여백 같게(나란한 두 칸은 그대로 같은 높이) (학생 요청 — 2026-10-20) */
+.mo-cells { grid-auto-rows: auto; }
